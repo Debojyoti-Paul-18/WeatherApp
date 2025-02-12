@@ -1,4 +1,3 @@
-// Get your free API key from https://openweathermap.org/api
 const API_KEY = '1fd6775f7dc6e47c23cf9f95dfc44086';
 
 async function getWeather() {
@@ -8,6 +7,7 @@ async function getWeather() {
     const weather = document.getElementById('weather');
     const humidity = document.getElementById('humidity');
     const wind = document.getElementById('wind');
+    const pressure = document.getElementById('pressure'); 
     const weatherInfo = document.getElementById('weatherInfo');
     const errorMessage = document.getElementById('errorMessage');
 
@@ -28,6 +28,7 @@ async function getWeather() {
         weather.textContent = data.weather[0].main;
         humidity.textContent = data.main.humidity;
         wind.textContent = data.wind.speed;
+        pressure.textContent = data.main.pressure; 
 
         // Show weather info and hide error
         weatherInfo.style.display = 'block';
