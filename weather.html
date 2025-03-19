@@ -13,6 +13,8 @@
             <button onclick="getWeather()">Search</button>
         </div>
         <div class="error" id="errorMessage"></div>
+
+        <!-- Current Weather -->
         <div class="weather-info" id="weatherInfo">
             <h2 id="cityName"></h2>
             <div class="details">
@@ -22,6 +24,12 @@
                 <p>Humidity: <span id="humidity"></span>%</p>
                 <p>Wind Speed: <span id="wind"></span> km/h</p>
             </div>
+        </div>
+
+        <!-- 3-Day Weather Forecast -->
+        <div class="forecast-container">
+            <h2>3-Day Forecast</h2>
+            <div class="forecast" id="forecast"></div>
         </div>
     </div>
 
