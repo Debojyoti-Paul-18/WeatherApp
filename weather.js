@@ -75,7 +75,6 @@ async function getForecast(city) {
                 };
             }
         });
-
         // Display Forecast Data
         Object.keys(forecastDays).slice(0, 3).forEach((day) => {
             const forecast = forecastDays[day];
