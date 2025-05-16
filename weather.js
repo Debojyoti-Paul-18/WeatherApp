@@ -23,7 +23,7 @@ async function getWeather() {
         }
 
         const data = await response.json();
-        
+
         // Update Current Weather Details
         cityName.textContent = `${data.name}, ${data.sys.country}`;
         temp.textContent = Math.round(data.main.temp);
@@ -36,8 +36,21 @@ async function getWeather() {
         weatherInfo.style.display = 'block';
         errorMessage.style.display = 'none';
 
-        // Fetch 3-Day Forecast Data
+        // Fetch 3-Day Forecast Data (API-based)
         getForecast(cityInput.value);
+
+        // Simulated forecast using geolocation
+        const location = getUserLocation(); // Task 3
+        const simulatedForecast = generateWeatherForecast(cityInput.value, location.latitude, location.longitude); // Task 2
+        console.log(`\nSimulated 3-Day Forecast for ${cityInput.value}`);
+        simulatedForecast.forEach(day => {
+            console.log(`Date: ${day.date}`);
+            console.log(`Lat: ${day.latitude}, Lon: ${day.longitude}`);
+            console.log(`Condition: ${day.condition}`);
+            console.log(`Temperature: ${day.temperature}°C`);
+            console.log(`Humidity: ${day.humidity}%`);
+            console.log('---------------------------');
+        });
 
     } catch (error) {
         errorMessage.textContent = 'Error: ' + error.message;
@@ -46,7 +59,7 @@ async function getWeather() {
     }
 }
 
-// Fetch 3-Day Forecast Data
+// Fetch 3-Day Forecast Data (real API)
 async function getForecast(city) {
     const forecastContainer = document.getElementById('forecast');
     forecastContainer.innerHTML = ''; // Clear previous data
@@ -75,6 +88,7 @@ async function getForecast(city) {
                 };
             }
         });
+
         // Display Forecast Data
         Object.keys(forecastDays).slice(0, 3).forEach((day) => {
             const forecast = forecastDays[day];
@@ -91,4 +105,39 @@ async function getForecast(city) {
     } catch (error) {
         console.error("Error fetching forecast:", error);
     }
+}
+
+// ✅ Task 1: Simulate Geolocation
+function getUserLocation() {
+    return {
+        latitude: 40.7128,
+        longitude: -74.0060 // New York
+    };
+}
+
+// ✅ Task 2: Generate Forecast from Simulated Location
+function generateWeatherForecast(city, latitude, longitude) {
+    const weatherConditions = ["Sunny", "Cloudy", "Rainy", "Snowy"];
+    const forecast = [];
+    const currentDate = new Date();
+
+    for (let i = 0; i < 3; i++) {
+        const date = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()}`;
+        const temperature = (Math.random() * 45 - 10).toFixed(1); // Range -10 to 35 °C
+        const condition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+        const humidity = Math.floor(Math.random() * 100);
+
+        forecast.push({
+            date,
+            temperature,
+            condition,
+            humidity,
+            latitude,
+            longitude
+        });
+
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return forecast;
 }
